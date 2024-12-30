@@ -1,24 +1,28 @@
-import LoginForm from "@/components/LoginForm"
-import Image from "next/image"
+import { LoginForm } from "@/components/LoginForm"
 
 export default function LoginPage() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="max-w-md w-full space-y-8 p-10 bg-white rounded-xl shadow-lg">
-        <div className="text-center">
-          <Image
-            src="/logo.svg"
-            alt="UB Talk Logo"
-            width={80}
-            height={80}
-            className="mx-auto"
-          />
-          <h2 className="mt-6 text-3xl font-bold text-gray-900">
-            Welcome to UB Talk
-          </h2>
-          <p className="mt-2 text-sm text-gray-600">Sign in to your account</p>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-100 to-purple-100 p-4">
+      <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-bold text-gray-800">Welcome Back!</h1>
+          <p className="text-gray-600">Log in to your EdTech account</p>
         </div>
         <LoginForm />
+        <div className="mt-6 text-center">
+          <a href="#" className="text-sm text-blue-600 hover:text-blue-500">
+            Forgot your password?
+          </a>
+          <p className="text-sm text-gray-600">
+            Don&apos;t have an account yet?{" "}
+            <a
+              href="/signup"
+              className="font-medium text-blue-600 hover:text-blue-500"
+            >
+              Sign Up
+            </a>
+          </p>
+        </div>
       </div>
     </div>
   )
