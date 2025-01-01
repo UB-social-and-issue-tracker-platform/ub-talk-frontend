@@ -1,12 +1,15 @@
-import Header from "@/components/Header"
+import { AppSidebar } from "@/components/Sidebar"
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 
 const UBTLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="mx-auto w-full max-w-7xl">
-      {/* Header Component goes here! */}
-      <Header />
-      <div className="px-4 py-2">{children}</div>
-    </div>
+    <SidebarProvider>
+      <AppSidebar />
+      <main>
+        <SidebarTrigger />
+        {children}
+      </main>
+    </SidebarProvider>
   )
 }
 export default UBTLayout
