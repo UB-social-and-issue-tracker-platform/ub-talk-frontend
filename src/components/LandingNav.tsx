@@ -1,27 +1,52 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Menu, X } from "lucide-react"
+import Image from "next/image"
 
 const LandingNav = () => {
   const [isOpen, setIsOpen] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
 
   const toggleMenu = () => setIsOpen(!isOpen)
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setIsScrolled(true)
+      } else {
+        setIsScrolled(false)
+      }
+    }
+
+    window.addEventListener("scroll", handleScroll)
+    return () => {
+      window.removeEventListener("scroll", handleScroll)
+    }
+  }, [])
+
   return (
-    <motion.nav className="w-full bg-white shadow-md py-4 z-50">
+    <motion.nav
+      className={`w-full py-4 z-50 ${isScrolled ? "bg-white/70 backdrop-blur-md shadow-md fixed top-0" : "bg-white shadow-md"}`}
+    >
       <div className="container mx-auto px-4">
         {/* Desktop and Mobile Header */}
         <div className="flex justify-between items-center">
-          <motion.div
+          <motion.a
+            href="#"
             initial={{ x: -100 }}
             animate={{ x: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-2xl font-bold text-blue-600"
           >
-            UB Talk
-          </motion.div>
+            <Image
+              src="/ub-talk-logo.png"
+              width={50}
+              height={50}
+              alt="Ub Talk"
+            />
+          </motion.a>
 
           {/* Desktop Navigation */}
           <motion.ul
@@ -36,10 +61,10 @@ const LandingNav = () => {
               transition={{ duration: 0.5, delay: 0.4 }}
             >
               <a
-                href="#"
+                href="#Features"
                 className="text-gray-600 hover:text-blue-600 transition-colors"
               >
-                Home
+                Features
               </a>
             </motion.li>
             <motion.li
@@ -48,10 +73,10 @@ const LandingNav = () => {
               transition={{ duration: 0.5, delay: 0.6 }}
             >
               <a
-                href="#"
+                href="#Testimonials"
                 className="text-gray-600 hover:text-blue-600 transition-colors"
               >
-                About
+                Testimonials
               </a>
             </motion.li>
             <motion.li
@@ -63,24 +88,23 @@ const LandingNav = () => {
                 href="#"
                 className="text-gray-600 hover:text-blue-600 transition-colors"
               >
-                Contact
+                About
               </a>
             </motion.li>
           </motion.ul>
-          <div>
-            <motion.li
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5, delay: 1.0 }}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 1.0 }}
+            className="md:visible"
+          >
+            <a
+              href="/signup"
+              className="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition-colors"
             >
-              <a
-                href="/signup"
-                className="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition-colors"
-              >
-                Sign Up
-              </a>
-            </motion.li>
-          </div>
+              Sign Up
+            </a>
+          </motion.div>
           {/* Mobile Menu Button */}
           <button
             onClick={toggleMenu}
