@@ -67,13 +67,15 @@ export function AppSidebar() {
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader className="p-2">
-        <Image
-          width="100"
-          height="100"
-          src="/ub-talk-logo.png"
-          alt="UB Talk Logo"
-          className="h-10 object-contain"
-        />
+        <Link href="/home">
+          <Image
+            width="100"
+            height="100"
+            src="/ub-talk-logo.png"
+            alt="UB Talk Logo"
+            className="h-10 object-contain"
+          />
+        </Link>
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
@@ -102,7 +104,9 @@ export function AppSidebar() {
             <Button variant="ghost" className="w-full justify-start">
               <Avatar className="h-8 w-8 mr-2">
                 <AvatarImage src="/avatars/user-avatar.png" alt="User" />
-                <AvatarFallback>BD</AvatarFallback>
+                <AvatarFallback className="bg-primary text-white font-bold">
+                  BD
+                </AvatarFallback>
               </Avatar>
 
               <>

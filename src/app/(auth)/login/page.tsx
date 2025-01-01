@@ -54,9 +54,9 @@ export default function LoginPage() {
   return (
     <div className="container mx-auto flex items-center justify-center">
       <Card className="w-full max-w-md">
-        <CardHeader>
-          <CardTitle>Login to UB Talk</CardTitle>
-          <CardDescription>
+        <CardHeader className="text-center">
+          <CardTitle className="font-lora text-2xl">Login to UB Talk</CardTitle>
+          <CardDescription className="font-expletusSans">
             Enter your matricule and password to access your account
           </CardDescription>
         </CardHeader>

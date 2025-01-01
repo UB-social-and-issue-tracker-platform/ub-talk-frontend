@@ -31,10 +31,12 @@ export function ComplaintsList({ complaints }: ComplaintsListProps) {
         <Card key={complaint.id}>
           <CardHeader>
             <div className="flex justify-between items-start">
-              <CardTitle className="text-lg">{complaint.title}</CardTitle>
+              <CardTitle className="text-lg font-lora">
+                {complaint.title}
+              </CardTitle>
               <Badge>{complaint.category}</Badge>
             </div>
-            <CardDescription>
+            <CardDescription className="font-expletusSans">
               {complaint.department} •{" "}
               {new Date(complaint.createdAt).toLocaleDateString()}
             </CardDescription>

@@ -20,7 +20,7 @@ export default function StudentsPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-8">Students Board</h1>
+      <h1 className="text-3xl font-bold mb-8 font-lora">Students Board</h1>
 
       <StudentFilters />
 

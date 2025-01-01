@@ -38,11 +38,11 @@ export default function NewsPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-8">University News</h1>
+      <h1 className="text-3xl font-bold mb-8 font-lora">University News</h1>
       <NewsFilter />
       {pinnedNews.length > 0 && (
         <div className="mb-8">
-          <h2 className="text-2xl font-semibold mb-4">Pinned News</h2>
+          <h2 className="text-2xl font-semibold mb-4 font-lora">Pinned News</h2>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {pinnedNews.map((item) => (
               <NewsCard key={item.id} news={item} isAdmin={isAdmin} />
@@ -51,7 +51,7 @@ export default function NewsPage() {
         </div>
       )}
       <div>
-        <h2 className="text-2xl font-semibold mb-4">Latest News</h2>
+        <h2 className="text-2xl font-semibold mb-4  font-lora">Latest News</h2>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {regularNews.map((item) => (
             <NewsCard key={item.id} news={item} isAdmin={isAdmin} />

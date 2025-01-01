@@ -2,10 +2,6 @@
 
 import { useState } from "react"
 import { useSelector } from "react-redux"
-// import { RootState } from '../redux/store';
-// import { ComplaintsList } from '../components/ComplaintsList';
-// import { ComplaintForm } from '../components/ComplaintForm';
-// import { ComplaintsFilter } from '../components/ComplaintsFilter';
 import { RootState } from "@/redux/store"
 import { ComplaintsList } from "@/components/complaints/ComplaintsList"
 import { ComplaintForm } from "@/components/complaints/ComplaintForm"
@@ -31,7 +27,7 @@ export default function ComplaintsPage() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold">Complaints</h1>
+        <h1 className="text-3xl font-bold font-lora">Complaints</h1>
         <Button onClick={() => setIsFormOpen(true)}>
           <Plus className="mr-2 h-4 w-4" />
           New Complaint

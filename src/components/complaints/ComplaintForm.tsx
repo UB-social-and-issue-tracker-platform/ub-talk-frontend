@@ -78,7 +78,9 @@ export function ComplaintForm({ open, onOpenChange }: ComplaintFormProps) {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Submit New Complaint</DialogTitle>
+          <DialogTitle className="font-lora text-xl">
+            Submit New Complaint
+          </DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">

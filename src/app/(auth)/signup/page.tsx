@@ -58,9 +58,11 @@ export default function SignupPage() {
   return (
     <div className="container mx-auto flex items-center justify-center">
       <Card className="w-full max-w-md">
-        <CardHeader>
-          <CardTitle>Sign up for UB Talk</CardTitle>
-          <CardDescription>
+        <CardHeader className="text-center">
+          <CardTitle className="font-lora text-2xl">
+            Sign up for UB Talk
+          </CardTitle>
+          <CardDescription className="font-expletusSans">
             Create your account to join the university community
           </CardDescription>
         </CardHeader>
