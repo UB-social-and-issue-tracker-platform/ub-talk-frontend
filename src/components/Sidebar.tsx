@@ -1,3 +1,5 @@
+"use client"
+
 import Link from "next/link"
 import {
   Home,
@@ -21,6 +23,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from "@/components/ui/sidebar"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
@@ -33,6 +36,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import Image from "next/image"
+import { usePathname } from "next/navigation"
+import { cn } from "@/lib/utils"
 
 // Menu items.
 const items = [
@@ -64,18 +69,26 @@ const items = [
 ]
 
 export function AppSidebar() {
+  const pathname = usePathname()
+  const { state } = useSidebar()
+
   return (
     <Sidebar collapsible="icon">
-      <SidebarHeader className="p-2">
-        <Link href="/home">
-          <Image
-            width="100"
-            height="100"
-            src="/ub-talk-logo.png"
-            alt="UB Talk Logo"
-            className="h-10 object-contain"
-          />
-        </Link>
+      <SidebarHeader>
+        <div>
+          <Link href="/home" className="flex flex-col items-center">
+            <Image
+              src="/ub-talk-logo.png"
+              alt="ub_talk_logo"
+              width={100}
+              height={100}
+              className="h-10 object-contain"
+            />
+            {/* {state === "expanded" && (
+              <span className="font-bold font-lora">Admin Dashboard</span>
+            )} */}
+          </Link>
+        </div>
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
@@ -83,7 +96,13 @@ export function AppSidebar() {
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
+                  <SidebarMenuButton
+                    asChild
+                    className={cn(
+                      "w-full justify-start hover:bg-primary",
+                      pathname === item.url && "bg-gray-200 text-primary",
+                    )}
+                  >
                     <Link
                       href={item.url}
                       className="flex items-center space-x-2 hover:bg-primary hover:text-primary-foreground rounded-md transition-colors"
@@ -98,10 +117,10 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter className="p-2">
+      <SidebarFooter>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="w-full justify-start">
+            <Button variant="ghost" className="w-full justify-start -ml-4">
               <Avatar className="h-8 w-8 mr-2">
                 <AvatarImage src="/avatars/user-avatar.png" alt="User" />
                 <AvatarFallback className="bg-primary text-white font-bold">
@@ -110,7 +129,9 @@ export function AppSidebar() {
               </Avatar>
 
               <>
-                <span className="flex-grow text-left">User Name</span>
+                {state === "expanded" && (
+                  <span className="flex-grow text-left">User Name</span>
+                )}
                 <ChevronDown className="h-4 w-4 opacity-50" />
               </>
             </Button>

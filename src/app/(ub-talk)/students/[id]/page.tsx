@@ -17,7 +17,7 @@ export default function StudentProfile({ params }: { params: { id: string } }) {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div>
       <Card className="max-w-2xl mx-auto">
         <CardHeader className="text-center">
           <Avatar className="h-24 w-24 mx-auto mb-4">

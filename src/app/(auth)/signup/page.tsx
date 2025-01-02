@@ -1,10 +1,10 @@
 "use client"
 
-import { useState } from "react"
+import React, { useState } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import * as z from "zod"
-import { Button } from "@/components/ui/button"
+import { z } from "zod"
+import FormField from "@/components/FormField"
 import {
   Card,
   CardContent,
@@ -13,36 +13,40 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form"
+import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import { Form } from "@/components/ui/form"
 
-const signupSchema = z.object({
-  email: z.string().email("Invalid email address"),
-  name: z.string().min(2, "Name must be at least 2 characters"),
-  matricule: z.string().min(1, "Matricule is required"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
-})
+const signupSchema = z
+  .object({
+    email: z.string().email("Invalid email address"),
+    firstName: z.string().min(2, "First Name must be at least 2 characters"),
+    lastName: z.string().min(2, "Last Name must be at least 2 characters"),
+    matricule: z.string().min(1, "Matricule is required"),
+    password: z.string().min(8, "Password must be at least 8 characters"),
+    confirmPassword: z
+      .string()
+      .min(8, "Confirm Password must be at least 8 characters"),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ["confirmPassword"],
+  })
 
 type SignupFormData = z.infer<typeof signupSchema>
 
 export default function SignupPage() {
   const [isLoading, setIsLoading] = useState(false)
 
-  const form = useForm<SignupFormData>({
+  const methods = useForm<SignupFormData>({
     resolver: zodResolver(signupSchema),
     defaultValues: {
       email: "",
-      name: "",
+      firstName: "",
+      lastName: "",
       matricule: "",
       password: "",
+      confirmPassword: "",
     },
   })
 
@@ -56,94 +60,71 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="container mx-auto flex items-center justify-center">
-      <Card className="w-full max-w-md">
-        <CardHeader className="text-center">
-          <CardTitle className="font-lora text-2xl">
-            Sign up for UB Talk
-          </CardTitle>
-          <CardDescription className="font-expletusSans">
-            Create your account to join the university community
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+    <div className="mx-auto container max-w-[32rem] px-4">
+      <Form {...methods}>
+        <Card>
+          <CardHeader className="flex flex-col items-center">
+            <CardTitle className="font-lora text-2xl">Sign Up</CardTitle>
+            <CardDescription className="font-expletusSans">
+              Fill all fields to create an account
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form
+              onSubmit={methods.handleSubmit(onSubmit)}
+              className="space-y-4"
+            >
+              {" "}
+              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <FormField
+                  name="firstName"
+                  label="First Name"
+                  placeholder="Enter your first name"
+                />
+                <FormField
+                  name="lastName"
+                  label="Last Name"
+                  placeholder="Enter your last name"
+                />
+              </div>
               <FormField
-                control={form.control}
                 name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="email"
-                        placeholder="Enter your email"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
+                label="Email"
+                type="email"
+                placeholder="Enter your email"
               />
               <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Name</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Enter your full name" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
                 name="matricule"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Matricule</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Enter your matricule" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
+                label="Matricule"
+                placeholder="Enter your matricule"
               />
               <FormField
-                control={form.control}
                 name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Password</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="password"
-                        placeholder="Create a password"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
+                label="Password"
+                type="password"
+                placeholder="Enter your password"
               />
-              <Button type="submit" className="w-full" disabled={isLoading}>
+              <FormField
+                name="confirmPassword"
+                label="Confirm Password"
+                type="password"
+                placeholder="Confirm your password"
+              />
+              <Button type="submit" disabled={isLoading} className="w-full">
                 {isLoading ? "Signing up..." : "Sign up"}
               </Button>
             </form>
-          </Form>
-        </CardContent>
-        <CardFooter className="flex justify-center">
-          <p>
-            Already have an account?{" "}
-            <Link href="/login" className="text-primary hover:underline">
-              Login
-            </Link>
-          </p>
-        </CardFooter>
-      </Card>
+          </CardContent>
+          <CardFooter className="flex justify-center">
+            <p>
+              Already have an account?{" "}
+              <Link href="/login" className="text-primary hover:underline">
+                Log in
+              </Link>
+            </p>
+          </CardFooter>
+        </Card>
+      </Form>
     </div>
   )
 }

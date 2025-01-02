@@ -1,10 +1,10 @@
-import { AppSidebar } from "@/components/Sidebar"
+import { AdminSidebar } from "@/components/admin/AdminSidebar"
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 
 const UBTLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <SidebarProvider>
-      <AppSidebar />
+      <AdminSidebar />
       <main className="container mx-auto px-4 py-8">
         <SidebarTrigger />
         {children}

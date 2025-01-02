@@ -13,15 +13,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form"
+import FormField from "@/components/FormField"
+import { Form } from "@/components/ui/form"
 import Link from "next/link"
 
 const loginSchema = z.object({
@@ -64,34 +57,15 @@ export default function LoginPage() {
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <FormField
-                control={form.control}
                 name="matricule"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Matricule</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Enter your matricule" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
+                label="Matricule"
+                placeholder="Enter your matricule"
               />
               <FormField
-                control={form.control}
                 name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Password</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="password"
-                        placeholder="Enter your password"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
+                label="Password"
+                type="password"
+                placeholder="Enter your password"
               />
               <Button type="submit" className="w-full" disabled={isLoading}>
                 {isLoading ? "Logging in..." : "Login"}
