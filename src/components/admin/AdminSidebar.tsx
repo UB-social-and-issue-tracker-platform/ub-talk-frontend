@@ -50,7 +50,7 @@ export function AdminSidebar() {
               className="h-10 object-contain"
             />
             {state === "expanded" && (
-              <span className="font-bold font-lora">Admin Dashboard</span>
+              <span className="font-bold font-lora">Admin Side</span>
             )}
           </Link>
         </div>

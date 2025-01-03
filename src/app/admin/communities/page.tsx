@@ -21,43 +21,51 @@ export default function AdminCommunities() {
   )
 
   const handleApprove = (communityId: string) => {
-    dispatch(updateCommunity({ id: communityId, isApproved: true }))
+    dispatch(updateCommunity({ id: communityId, status: "Approved" }))
   }
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-8">Manage Communities</h1>
+      <h1 className="text-3xl font-bold mb-8 font-lora text-primary">
+        Manage Communities
+      </h1>
       <Card>
         <CardHeader>
-          <CardTitle>Pending Communities</CardTitle>
+          <CardTitle className="font-lora">Pending Communities</CardTitle>
         </CardHeader>
         <CardContent>
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Name</TableHead>
-                <TableHead>Description</TableHead>
-                <TableHead>Platform</TableHead>
-                <TableHead>Action</TableHead>
+                <TableHead className="font-expletusSans">Name</TableHead>
+                <TableHead className="font-expletusSans">Description</TableHead>
+                <TableHead className="font-expletusSans">Platform</TableHead>
+                <TableHead className="font-expletusSans">Action</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {communities
-                .filter((c) => !c.isApproved)
-                .map((community) => (
-                  <TableRow key={community.id}>
-                    <TableCell>{community.name}</TableCell>
-                    <TableCell>{community.description}</TableCell>
-                    <TableCell>{community.platform}</TableCell>
-                    <TableCell>
-                      <Button onClick={() => handleApprove(community.id)}>
-                        Approve
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))}
+              {communities.length !== 0 &&
+                communities
+                  .filter((c) => c.status === "Pending")
+                  .map((community) => (
+                    <TableRow key={community.id}>
+                      <TableCell>{community.name}</TableCell>
+                      <TableCell>{community.description}</TableCell>
+                      <TableCell>{community.platform}</TableCell>
+                      <TableCell>
+                        <Button onClick={() => handleApprove(community.id)}>
+                          Approve
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
             </TableBody>
           </Table>
+          {communities.length === 0 && (
+            <div className="flex justify-center items-center h-40">
+              <p>No pending community to display!</p>
+            </div>
+          )}
         </CardContent>
       </Card>
     </div>

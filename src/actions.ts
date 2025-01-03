@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
-import { LoginType, SignupType, UserType } from "../types"
+import { LoginType, SignupType, UserType } from "./types"
 
 const apiUrl = process.env.NEXT_PUBLIC_BACKEND_BASE_URL
 
@@ -20,6 +20,7 @@ export const signup = createAsyncThunk(
         body: JSON.stringify(userData),
       })
       if (!response.ok) throw new Error("Signup failed")
+      console.log("Server returned data: ", await response.json())
       return await response.json()
     } catch (error) {
       return rejectWithValue((error as Error).message)

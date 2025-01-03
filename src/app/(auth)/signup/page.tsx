@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import FormField from "@/components/FormField"
+import toast, { Toaster } from "react-hot-toast"
 import {
   Card,
   CardContent,
@@ -16,6 +17,12 @@ import {
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { Form } from "@/components/ui/form"
+import { useToast } from "@/hooks/use-toast"
+import { useDispatch } from "react-redux"
+import { AppDispatch } from "@/redux/store"
+import { signup } from "@/actions"
+import { SignupType } from "@/types"
+import { useRouter } from "next/navigation"
 
 const signupSchema = z
   .object({
@@ -24,19 +31,22 @@ const signupSchema = z
     lastName: z.string().min(2, "Last Name must be at least 2 characters"),
     matricule: z.string().min(1, "Matricule is required"),
     password: z.string().min(8, "Password must be at least 8 characters"),
-    confirmPassword: z
+    passwordConfirm: z
       .string()
       .min(8, "Confirm Password must be at least 8 characters"),
   })
-  .refine((data) => data.password === data.confirmPassword, {
+  .refine((data) => data.password === data.passwordConfirm, {
     message: "Passwords don't match",
-    path: ["confirmPassword"],
+    path: ["passwordConfirm"],
   })
 
 type SignupFormData = z.infer<typeof signupSchema>
 
-export default function SignupPage() {
+const SignupPage = () => {
   const [isLoading, setIsLoading] = useState(false)
+  // const { toast } = useToast()
+  const dispatch = useDispatch<AppDispatch>()
+  const router = useRouter()
 
   const methods = useForm<SignupFormData>({
     resolver: zodResolver(signupSchema),
@@ -46,17 +56,36 @@ export default function SignupPage() {
       lastName: "",
       matricule: "",
       password: "",
-      confirmPassword: "",
+      passwordConfirm: "",
     },
   })
 
   const onSubmit = async (data: SignupFormData) => {
     setIsLoading(true)
-    // Here you would typically dispatch a signup action or call an API
-    console.log("Signup data:", data)
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-    setIsLoading(false)
+    const newData: SignupType = {
+      ...data,
+      // role: "STUDENT",
+      facultyId: 4,
+      programId: 2,
+    }
+    console.log("Signup data:", newData)
+
+    try {
+      await dispatch(signup(newData)).unwrap()
+      toast.success("Your account has been created. Proceed to login", {
+        duration: 5000,
+        // icon: Check,
+        position: "top-right",
+      })
+      router.push("/login")
+    } catch (error) {
+      console.error("Signup failed", error)
+      toast.error("Sign up failed! Try again", {
+        position: "top-right",
+      })
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -105,7 +134,7 @@ export default function SignupPage() {
                 placeholder="Enter your password"
               />
               <FormField
-                name="confirmPassword"
+                name="passwordConfirm"
                 label="Confirm Password"
                 type="password"
                 placeholder="Confirm your password"
@@ -125,6 +154,9 @@ export default function SignupPage() {
           </CardFooter>
         </Card>
       </Form>
+      <Toaster />
     </div>
   )
 }
+
+export default SignupPage

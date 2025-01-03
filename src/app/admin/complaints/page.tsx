@@ -37,48 +37,56 @@ export default function AdminComplaints() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-8">Manage Complaints</h1>
+      <h1 className="text-3xl font-bold mb-8 font-lora text-primary">
+        Manage Complaints
+      </h1>
       <Card>
         <CardHeader>
-          <CardTitle>All Complaints</CardTitle>
+          <CardTitle className="font-lora text-xl">All Complaints</CardTitle>
         </CardHeader>
         <CardContent>
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Title</TableHead>
-                <TableHead>Category</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Action</TableHead>
+                <TableHead className="font-expletusSans">Title</TableHead>
+                <TableHead className="font-expletusSans">Category</TableHead>
+                <TableHead className="font-expletusSans">Status</TableHead>
+                <TableHead className="font-expletusSans">Action</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {complaints.map((complaint) => (
-                <TableRow key={complaint.id}>
-                  <TableCell>{complaint.title}</TableCell>
-                  <TableCell>{complaint.category}</TableCell>
-                  <TableCell>{complaint.status}</TableCell>
-                  <TableCell>
-                    <Select
-                      onValueChange={(value) =>
-                        handleStatusChange(complaint.id, value)
-                      }
-                      defaultValue={complaint.status}
-                    >
-                      <SelectTrigger className="w-[180px]">
-                        <SelectValue placeholder="Change status" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="Pending">Pending</SelectItem>
-                        <SelectItem value="Completed">Completed</SelectItem>
-                        <SelectItem value="Escalated">Escalated</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </TableCell>
-                </TableRow>
-              ))}
+              {complaints.length !== 0 &&
+                complaints.map((complaint) => (
+                  <TableRow key={complaint.id}>
+                    <TableCell>{complaint.title}</TableCell>
+                    <TableCell>{complaint.category}</TableCell>
+                    <TableCell>{complaint.status}</TableCell>
+                    <TableCell>
+                      <Select
+                        onValueChange={(value) =>
+                          handleStatusChange(complaint.id, value)
+                        }
+                        defaultValue={complaint.status}
+                      >
+                        <SelectTrigger className="w-[180px]">
+                          <SelectValue placeholder="Change status" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="Pending">Pending</SelectItem>
+                          <SelectItem value="Completed">Completed</SelectItem>
+                          <SelectItem value="Escalated">Escalated</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </TableCell>
+                  </TableRow>
+                ))}
             </TableBody>
           </Table>
+          {complaints.length === 0 && (
+            <div className="flex justify-center items-center h-40">
+              <p>No complaints to display!</p>
+            </div>
+          )}
         </CardContent>
       </Card>
     </div>

@@ -1,31 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { v4 as uuidv4 } from "uuid"
-
-export interface NewsItem {
-  id: string
-  title: string
-  content: string
-  authorId: string
-  department: string
-  createdAt: string
-  updatedAt: string
-  isPinned: boolean
-  reactions: {
-    likes: number
-    dislikes: number
-  }
-  comments: Array<{
-    id: string
-    userId: string
-    content: string
-    createdAt: string
-  }>
-}
+import { NewsItemType } from "@/types"
 
 interface NewsState {
-  news: NewsItem[]
+  news: NewsItemType[]
   filters: {
-    department: string
+    faculty: string
     date: string
   }
 }
@@ -33,7 +13,7 @@ interface NewsState {
 const initialState: NewsState = {
   news: [],
   filters: {
-    department: "all",
+    faculty: "all",
     date: "all",
   },
 }
@@ -46,12 +26,12 @@ const newsSlice = createSlice({
       state,
       action: PayloadAction<
         Omit<
-          NewsItem,
+          NewsItemType,
           "id" | "createdAt" | "updatedAt" | "reactions" | "comments"
         >
       >,
     ) => {
-      const newNews: NewsItem = {
+      const newNews: NewsItemType = {
         ...action.payload,
         id: uuidv4(),
         createdAt: new Date().toISOString(),
@@ -63,7 +43,7 @@ const newsSlice = createSlice({
     },
     updateNews: (
       state,
-      action: PayloadAction<Partial<NewsItem> & { id: string }>,
+      action: PayloadAction<Partial<NewsItemType> & { id: string }>,
     ) => {
       const index = state.news.findIndex((n) => n.id === action.payload.id)
       if (index !== -1) {
@@ -97,7 +77,7 @@ const newsSlice = createSlice({
     },
     addReaction: (
       state,
-      action: PayloadAction<{ newsId: string; reaction: "like" | "dislike" }>,
+      action: PayloadAction<{ newsId: string; reaction: "likes" | "dislikes" }>,
     ) => {
       const news = state.news.find((n) => n.id === action.payload.newsId)
       if (news) {
@@ -106,7 +86,7 @@ const newsSlice = createSlice({
     },
     setNewsFilter: (
       state,
-      action: PayloadAction<{ type: "department" | "date"; value: string }>,
+      action: PayloadAction<{ type: "faculty" | "date"; value: string }>,
     ) => {
       state.filters[action.payload.type] = action.payload.value
     },

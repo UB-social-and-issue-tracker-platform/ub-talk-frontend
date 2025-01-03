@@ -14,7 +14,7 @@ export interface Community {
   updatedAt: string
   memberCount: number
   department?: string
-  isApproved: boolean
+  status: "Approved" | "Pending"
 }
 
 interface CommunitiesState {

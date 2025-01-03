@@ -23,7 +23,8 @@ import { AppDispatch } from "@/redux/store"
 const newsSchema = z.object({
   title: z.string().min(5, "Title must be at least 5 characters"),
   content: z.string().min(20, "Content must be at least 20 characters"),
-  department: z.string().min(2, "Department must be at least 2 characters"),
+  faculty: z.string().min(2, "Faculty must be at least 2 characters"),
+  attachment: z.string().optional(),
 })
 
 type NewsFormData = z.infer<typeof newsSchema>
@@ -36,7 +37,8 @@ export default function AdminNews() {
     defaultValues: {
       title: "",
       content: "",
-      department: "",
+      faculty: "",
+      attachment: "",
     },
   })
 
@@ -53,10 +55,12 @@ export default function AdminNews() {
 
   return (
     <div className="container mx-auto">
-      <h1 className="text-3xl font-bold mb-8">Post News</h1>
+      <h1 className="text-3xl font-bold mb-8 font-lora text-primary">
+        Post News
+      </h1>
       <Card>
         <CardHeader>
-          <CardTitle>Create New Post</CardTitle>
+          <CardTitle className="font-lora">Create New Post</CardTitle>
         </CardHeader>
         <CardContent>
           <Form {...form}>
@@ -68,7 +72,11 @@ export default function AdminNews() {
                   <FormItem>
                     <FormLabel>Title</FormLabel>
                     <FormControl>
-                      <Input placeholder="Enter news title" {...field} />
+                      <Input
+                        placeholder="Enter news title"
+                        {...field}
+                        className="focus-visible:ring-2 focus-visible:ring-primary transition-colors duration-500"
+                      />
                     </FormControl>
                     <FormDescription>
                       Provide a concise title for the news post.
@@ -86,7 +94,7 @@ export default function AdminNews() {
                     <FormControl>
                       <Textarea
                         placeholder="Enter news content"
-                        className="resize-none"
+                        className="resize-none focus-visible:ring-2 focus-visible:ring-primary transition-colors duration-500"
                         {...field}
                       />
                     </FormControl>
@@ -99,15 +107,41 @@ export default function AdminNews() {
               />
               <FormField
                 control={form.control}
-                name="department"
+                name="faculty"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Department</FormLabel>
+                    <FormLabel>Faculty</FormLabel>
                     <FormControl>
-                      <Input placeholder="Enter department" {...field} />
+                      <Input
+                        placeholder="Enter faculty"
+                        {...field}
+                        className="focus-visible:ring-2 focus-visible:ring-primary transition-colors duration-500"
+                      />
                     </FormControl>
                     <FormDescription>
-                      Specify the department related to this news.
+                      Specify the Faculty related to this news.
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="attachment"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Attachment(s)</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Attach files"
+                        {...field}
+                        className="focus-visible:ring-2 focus-visible:ring-primary transition-colors duration-500"
+                        type="file"
+                      />
+                    </FormControl>
+                    <FormDescription>
+                      Attach relevant files or documents to the news post.
+                      (optional)
                     </FormDescription>
                     <FormMessage />
                   </FormItem>

@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-// import { Geist, Geist_Mono } from "next/font/google"
+import { ThemeProvider } from "@/components/ThemeProvider"
 import "./globals.css"
 
 import { Providers } from "@/redux/provider"
@@ -28,7 +28,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`antialiased font-notoSans`}>
-        <Providers>{children}</Providers>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Providers>{children}</Providers>
+        </ThemeProvider>
       </body>
     </html>
   )
