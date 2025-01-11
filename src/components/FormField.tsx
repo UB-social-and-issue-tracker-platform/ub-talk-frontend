@@ -20,6 +20,7 @@ interface FormFieldProps {
   label: string
   type?: string
   placeholder: string
+  handleBlur?: (e: any) => void
 }
 
 const FormField = ({
@@ -27,6 +28,7 @@ const FormField = ({
   label,
   type = "text",
   placeholder,
+  handleBlur,
 }: FormFieldProps) => {
   const { control } = useFormContext()
   const [showPassword, setShowPassword] = useState(false)
@@ -49,6 +51,7 @@ const FormField = ({
                 type={showPassword && type === "password" ? "text" : type}
                 placeholder={placeholder}
                 className="pr-10 focus-visible:ring-2 focus-visible:ring-primary transition-colors duration-500"
+                onBlur={handleBlur}
               />
               {type === "password" && (
                 <Button

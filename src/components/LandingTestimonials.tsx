@@ -19,14 +19,14 @@ const LandingTestimonials = () => {
         <div className="grid gap-8 md:grid-cols-3">
           <Card className="bg-white/10 backdrop-blur-sm border-none">
             <CardHeader>
-              <CardTitle className="font-expletusSans text-xl font-semibold">
+              <CardTitle className="font-expletusSans text-xl font-semibold text-background">
                 Sarah M.
               </CardTitle>
               <CardDescription className="font-lora text-blue-200">
                 Computer Science, Year 3
               </CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="text-background">
               &quot;UB Talk has revolutionized how we communicate on campus.
               It&apos;s so much easier to stay informed and get involved
               now!&quot;
@@ -34,28 +34,28 @@ const LandingTestimonials = () => {
           </Card>
           <Card className="bg-white/10 backdrop-blur-sm border-none">
             <CardHeader>
-              <CardTitle className="font-expletusSans text-xl font-semibold">
+              <CardTitle className="font-expletusSans text-xl font-semibold text-background">
                 John D.
               </CardTitle>
               <CardDescription className="font-lora text-blue-200">
                 Business Administration, Year 2
               </CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="text-background">
               &quot;I love how easy it is to create and join communities.
               I&apos;ve met so many like-minded students through UB Talk!&quot;
             </CardContent>
           </Card>
           <Card className="bg-white/10 backdrop-blur-sm border-none">
             <CardHeader>
-              <CardTitle className="font-expletusSans text-xl font-semibold">
+              <CardTitle className="font-expletusSans text-xl font-semibold text-background">
                 Emily L.
               </CardTitle>
               <CardDescription className="font-lora text-blue-200">
                 Environmental Science, Year 4
               </CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="text-background">
               &quot;The issue tracking feature is a game-changer. It&apos;s
               great to see how our concerns are being addressed by the
               university.&quot;

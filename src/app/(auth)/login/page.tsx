@@ -16,9 +16,14 @@ import {
 import FormField from "@/components/FormField"
 import { Form } from "@/components/ui/form"
 import Link from "next/link"
+import { useDispatch, useSelector } from "react-redux"
+import { AppDispatch, RootState } from "../../../redux/store"
+import { login } from "@/actions"
+// import { useRouter } from "next/router"
+import { useRouter } from "next/navigation"
 
 const loginSchema = z.object({
-  matricule: z.string().min(1, "Matricule is required"),
+  email: z.string().email(),
   password: z.string().min(6, "Password must be at least 6 characters"),
 })
 
@@ -30,18 +35,40 @@ export default function LoginPage() {
   const form = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      matricule: "",
+      email: "",
       password: "",
     },
   })
 
+  const dispatch = useDispatch<AppDispatch>()
+  const router = useRouter()
+  const { isAuthenticated } = useSelector((state: RootState) => state.auth)
+
   const onSubmit = async (data: LoginFormData) => {
     setIsLoading(true)
-    // Here you would typically dispatch a login action or call an API
     console.log("Login data:", data)
     // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-    setIsLoading(false)
+    try {
+      await dispatch(login(data))
+      // if (isAuthenticated) {
+      //   router.push("/home")
+      // }
+      router.push("/home")
+    } catch (err) {
+      console.log(err)
+    } finally {
+      setIsLoading(false)
+    }
+    // try {
+    //   setIsLoading(false)
+    //   // if (response.data) {
+    //   //   console.log("Login successful")
+    //   //   router.push("/home")
+    //   // }
+    // } catch (error) {
+    //   console.error("An error occurred:", error)
+    //   setIsLoading(false)
+    // }
   }
 
   return (
@@ -57,9 +84,9 @@ export default function LoginPage() {
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <FormField
-                name="matricule"
-                label="Matricule"
-                placeholder="Enter your matricule"
+                name="email"
+                label="Email"
+                placeholder="Enter your email"
               />
               <FormField
                 name="password"

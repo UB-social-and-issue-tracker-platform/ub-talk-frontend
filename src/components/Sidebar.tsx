@@ -38,6 +38,8 @@ import {
 import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
+import { useSelector } from "react-redux"
+import { RootState } from "@/redux/store"
 
 // Menu items.
 const items = [
@@ -71,6 +73,13 @@ const items = [
 export function AppSidebar() {
   const pathname = usePathname()
   const { state } = useSidebar()
+
+  const { user } = useSelector((state: RootState) => state.auth)
+
+  const firstLetter = user?.firstName.charAt(0).toUpperCase()
+  const secondLetter = user?.lastName.charAt(0).toUpperCase()
+
+  const avatarText = `${firstLetter}${secondLetter}`
 
   return (
     <Sidebar collapsible="icon">
@@ -124,7 +133,7 @@ export function AppSidebar() {
               <Avatar className="h-8 w-8 mr-2">
                 <AvatarImage src="/avatars/user-avatar.png" alt="User" />
                 <AvatarFallback className="bg-primary text-white font-bold">
-                  BD
+                  {avatarText}
                 </AvatarFallback>
               </Avatar>
 

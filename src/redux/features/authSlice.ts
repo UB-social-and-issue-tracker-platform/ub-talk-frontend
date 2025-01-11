@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { signup, login, updateProfile } from "@/actions"
 import { UserType } from "../../types"
-
 interface AuthState {
   user: UserType | null
   isAuthenticated: boolean
@@ -45,9 +44,12 @@ const authSlice = createSlice({
         state.error = null
       })
       .addCase(login.fulfilled, (state, action: PayloadAction<UserType>) => {
-        state.isLoading = false
-        state.isAuthenticated = true
-        state.user = action.payload
+        if (action.payload.email) {
+          state.isAuthenticated = true
+          // state.user = action.payload
+          localStorage.setItem("user", JSON.stringify(action.payload))
+        }
+        // state.isLoading = false
       })
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false

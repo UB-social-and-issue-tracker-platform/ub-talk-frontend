@@ -38,7 +38,10 @@ export const login = createAsyncThunk(
         body: JSON.stringify(loginData),
       })
       if (!response.ok) throw new Error("Login failed")
-      return await response.json()
+      console.log("Server returned data: ", await response.json())
+      const data = await response.json()
+
+      return data.data.user
     } catch (error) {
       return rejectWithValue((error as Error).message)
     }
@@ -67,3 +70,18 @@ export const updateProfile = createAsyncThunk(
     }
   },
 )
+
+// Fetch programs based on faculty code
+// export const fetchPrograms = async (facultyCode: string) => {
+//   try {
+//     const res = await fetch(`${apiUrl}/faculty/${facultyCode}/programs`)
+//     const data = await res.json()
+//     if (data.status === "success") {
+//       return data.data.programs
+//     } else {
+//       toast.error("Failed to load programs")
+//     }
+//   } catch (error) {
+//     toast.error("Error fetching programs")
+//   }
+// }

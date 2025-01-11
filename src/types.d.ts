@@ -1,23 +1,43 @@
 export type UserType = {
-  id: string
-  name: string
+  userId: string
+  firstName: string
+  lastName: string
   email: string
   matricule: string
-  faculty?: string
-  department?: string
+  faculty?: {
+    facultyId: number
+    name: string
+  }
+  program?: {
+    programId: number
+    name: string
+  }
   interests?: string[]
   bio?: string
   profilePicture?: string
   role: "student" | "admin" | "student administrator"
 }
 
+// "userId": 1,
+// "email": "berthnk@gmail.com",
+// "role": "student",
+// "firstName": "Draxler",
+// "lastName": "Berthold",
+// "faculty": {
+//     "facultyId": 1,
+//     "name": "College of Technology"
+// },
+// "program": {
+//     "programId": 1,
+//     "programName": "Computer Engineering"
+// }
 export type SignupType = {
   email: string
   firstName: string
   lastName: string
-  matricule: string
+  studentId: string //Matricule
   password: string
-  passwordConfirm: string
+  // passwordConfirm: string
   // role:
   //   | "STUDENT"
   //   | "STUDENT_ADMIN"

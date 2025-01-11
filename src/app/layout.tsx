@@ -28,14 +28,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`antialiased font-notoSans`}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
+       
           <Providers>{children}</Providers>
-        </ThemeProvider>
+     
       </body>
     </html>
   )
